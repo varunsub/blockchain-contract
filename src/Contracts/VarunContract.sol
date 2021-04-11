@@ -1,37 +1,35 @@
 pragma solidity ^0.8.3;
 
 contract VarunContract {
-    string public name = "varun contract";
-    address public owner;
-    uint256 public test = 1;
+    address payable public bettor;
+    uint256 public balance;
+
+    uint256 betOn;
 
     constructor() {
-        owner = msg.sender;
+        bettor = payable(msg.sender);
+        balance = address(this).balance;
     }
 
-    address[] public bettors;
-    mapping(address => uint256) public balance;
-    mapping(address => bool) public hasBet;
-    mapping(address => bool) public isBetting;
+    mapping(address => uint256) public betAmount;
 
     /**
      * @param _amount the amount the user bets
      *
      *
      */
-    function bet(uint256 _amount) public {
-        balance[msg.sender] += _amount;
-
-        if (!hasBet[msg.sender]) {
-            bettors.push(msg.sender);
-        }
-        hasBet[msg.sender] = true;
-        isBetting[msg.sender] = true;
+    function bet(uint256 _amount, uint256 _betOn) public payable {
+        require(bettor == msg.sender);
+        betAmount[msg.sender] = _amount;
+        betOn = _betOn;
+        getResult();
     }
 
-    function payUser() public returns (uint256) {
-        test++;
-        return test;
+    function getResult() public payable {
+        uint256 result = random();
+        if (betOn == result) {
+            bettor.transfer(betAmount[bettor]);
+        }
     }
 
     function random() public view returns (uint256) {

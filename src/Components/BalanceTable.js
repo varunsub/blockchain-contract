@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Table, Form, Button, FormControl } from 'react-bootstrap';
 import styled from 'styled-components';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import VarunContract from '../abis/VarunContract.json';
+import Web3 from 'web3';
 
 export default function BalanceTable({ balance }) {
   const { register, handleSubmit, control } = useForm();
@@ -11,6 +12,18 @@ export default function BalanceTable({ balance }) {
     let amount = parseInt(data.betAmount);
     console.log(amount);
     console.log(balance);
+    console.log(data.choice);
+    let num;
+    const web3 = new Web3(window.ethereum);
+
+    if (data.choice === 'heads') num = 0;
+    else num = 1;
+
+    var contract = new web3.eth.Contract(
+      VarunContract.abi,
+      '0x7811ED3e89483e061f3032A2c63f24d2abe708c3'
+    );
+    contract.methods.bet(amount, num);
     if (amount < balance) {
       setError(null);
     } else {
@@ -22,7 +35,7 @@ export default function BalanceTable({ balance }) {
       <StyledTable>
         <thead>
           <tr>
-            <th>Balance (vToken)</th>
+            <th>Balance (wei)</th>
             <th>Bet</th>
           </tr>
         </thead>
@@ -41,7 +54,11 @@ export default function BalanceTable({ balance }) {
           rules={{ required: true }}
           type="number"
           {...register('betAmount')}
-        />
+        />{' '}
+        <select {...register('choice')}>
+          <option value="heads">heads</option>
+          <option value="tails">tails</option>
+        </select>
         <input type="submit" />
       </form>
       <div>{error !== null ? error : null}</div>
@@ -49,7 +66,7 @@ export default function BalanceTable({ balance }) {
   );
 }
 
-const StyledTable = styled(Table)`
+const StyledTable = styled.table`
   margin: 5%;
   width: 20% !important;
 `;
