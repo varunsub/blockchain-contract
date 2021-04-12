@@ -5,7 +5,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
 import BalanceTable from './Components/BalanceTable';
 import Home from './Views/Home';
-import VarunContract from './abis/VarunContract.json';
+import { withRouter } from 'react-router';
+
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import ContactUs from './Views/ContactUs';
+import Services from './Views/Services';
 
 export default function App() {
   const [connection, setConnection] = useState('connected');
@@ -55,44 +59,50 @@ export default function App() {
   // }, []);
 
   //State for when the wallet information is loading
-  if (connection === 'loading') {
-    return (
-      <>
-        <LoadingContainer>
-          <Spinner animation="border" role="status">
-            <span className="sr-only">Loading...</span>
-          </Spinner>
-        </LoadingContainer>
-      </>
-    );
-  }
+  // if (connection === 'loading') {
+  //   return (
+  //     <>
+  //       <LoadingContainer>
+  //         <Spinner animation="border" role="status">
+  //           <span className="sr-only">Loading...</span>
+  //         </Spinner>
+  //       </LoadingContainer>
+  //     </>
+  //   );
+  // }
 
-  //State if no wallet is present in the browser
-  if (connection === 'none') {
-    return (
-      <>
-        Oops, you need Meta Mask to use this app. Please install it and come
-        back
-      </>
-    );
-  }
+  // //State if no wallet is present in the browser
+  // if (connection === 'none') {
+  //   return (
+  //     <>
+  //       Oops, you need Meta Mask to use this app. Please install it and come
+  //       back
+  //     </>
+  //   );
+  // }
 
-  if (connection === 'invalid network') {
-    return (
-      <>
-        <div>Please make sure you're connected to the Ropsten Test network</div>
-      </>
-    );
-  }
-  //State once wallet is found
-  if (connection === 'connected') {
-    return (
-      <>
-        <Home />
-        {/* <BalanceTable balance={balance} /> */}
-      </>
-    );
-  }
+  // if (connection === 'invalid network') {
+  //   return (
+  //     <>
+  //       <div>Please make sure you're connected to the Ropsten Test network</div>
+  //     </>
+  //   );
+  // }
+  // //State once wallet is found
+  // if (connection === 'connected') {
+  return (
+    <>
+      <Router>
+        <Switch>
+          <Route path="/contactus" exact component={withRouter(ContactUs)} />
+          <Route path="/" exact component={withRouter(Home)} />
+          <Route path="/services" exact component={withRouter(Services)} />
+        </Switch>
+      </Router>
+      {/* <BalanceTable balance={balance} /> */}
+    </>
+  );
+  // }
 }
 
 const LoadingContainer = styled.div`
