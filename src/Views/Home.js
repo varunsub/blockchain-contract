@@ -1,24 +1,19 @@
 import styled from 'styled-components';
 import { Button, Container, Paper, Grid } from '@material-ui/core';
 import TextLoop from 'react-text-loop';
-
+import { Link } from 'react-router-dom';
+import NavBar from '../Components/NavBar';
+import { useState } from 'react';
 export default function Home() {
+  const [demoButton, setDemoButton] = useState('');
+  const [signButton, setSignButton] = useState('');
+
+  const [loanButton, setLoanButton] = useState('');
+
   return (
     <>
       {/* NavBar Section */}
-      <NavBarContainer component="div" elevation={4}>
-        <img src="Cobalt.png" alt="Cobalt Logo" height="50px" />
-        <ListStyling>
-          <li>Home</li>
-          <li>Contact Us</li>
-          <li>Services</li>
-          <li>About Us</li>
-        </ListStyling>
-        <RightBar>
-          <Hover>LOGIN </Hover>
-          <Button variant="contained">Sign Up</Button>
-        </RightBar>
-      </NavBarContainer>
+      <NavBar />
       <Header>
         <Left>
           <span>The new way </span>
@@ -33,8 +28,18 @@ export default function Home() {
             </TextLoop>
           </span>
           <SGrid direction="row" justify="space-evenly" container>
-            <Button variant="outlined">Request a Demo</Button>
-            <Button variant="outlined">Sign Up</Button>
+            <Button
+              variant="contained"
+              color={demoButton}
+              onClick={() => setDemoButton('primary')}>
+              Request a Demo
+            </Button>
+            <Button
+              variant="contained"
+              color={signButton}
+              onClick={() => setSignButton('primary')}>
+              Sign Up
+            </Button>
           </SGrid>
         </Left>
         <Right>
@@ -48,7 +53,10 @@ export default function Home() {
             To submit a proposal to the Foundation for a community vote click
             “Get Loan”
           </p>
-          <Button variant="outlined" color="primary">
+          <Button
+            variant="contained"
+            color={loanButton}
+            onClick={() => setLoanButton('primary')}>
             Get Loan
           </Button>
         </GetLoan>
@@ -58,38 +66,6 @@ export default function Home() {
   );
 }
 
-const NavBarContainer = styled(Paper)`
-  width: 100vw;
-  display: flex;
-  flex-direction: row;
-  padding: 2% 5% 2% 5%;
-  justify-content: space-between;
-  max-height: 5%;
-  align-items: center;
-`;
-
-const ListStyling = styled.ul`
-  width: 100%;
-  margin: 0 3% 0 10%;
-  li {
-    display: inline;
-    margin: 0 4% 0 4%;
-  }
-`;
-
-const RightBar = styled.span`
-  display: flex;
-  flex-direction: row;
-  width: 20%;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const Hover = styled.span`
-  :hover {
-    color: #3482f6;
-  }
-`;
 const Header = styled.div`
   height: 45vh;
   width: 100vw;
