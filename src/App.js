@@ -9,7 +9,7 @@ import { withRouter } from 'react-router';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ContactUs from './Views/ContactUs';
-import Services from './Views/Services';
+import AboutUs from './Views/AboutUs';
 
 export default function App() {
   const [connection, setConnection] = useState('connected');
@@ -96,7 +96,7 @@ export default function App() {
         <Switch>
           <Route path="/contactus" exact component={withRouter(ContactUs)} />
           <Route path="/" exact component={withRouter(Home)} />
-          <Route path="/services" exact component={withRouter(Services)} />
+          <Route path="/aboutus" exact component={withRouter(AboutUs)} />
         </Switch>
       </Router>
       {/* <BalanceTable balance={balance} /> */}

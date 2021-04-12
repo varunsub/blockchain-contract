@@ -14,7 +14,7 @@ export default function NavBar() {
         <NavItem to="/">Home</NavItem>
         <NavItem to="/contactus">Contact Us</NavItem>
         <NavItem to="/services">Services</NavItem>
-        <NavItem to="aboutUs">About Us</NavItem>
+        <NavItem to="aboutus">About Us</NavItem>
       </ListStyling>
       <RightBar>
         <Hover>LOGIN </Hover>
